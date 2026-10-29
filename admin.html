@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Panel Admin — For You</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <main id="admin-main">
+    <section class="card">
+      <div class="receipt-header">
+        <div>
+          <span class="badge">ADMIN PANEL</span>
+          <h2>Obrolan Langsung</h2>
+        </div>
+        <button id="btn-clear" class="btn-danger-sm" type="button">🗑️ Hapus Semua</button>
+      </div>
+
+      <p class="status-info">
+        Terakhir link dibuka olehnya: <strong id="last-opened">Memuat...</strong>
+      </p>
+
+      <div class="chat-box admin-chat-box">
+        <div id="admin-chat-list" class="chat-list" aria-live="polite">
+          <p class="chat-empty">Belum ada pesan masuk.</p>
+        </div>
+        <form id="admin-chat-form" class="chat-form">
+          <input name="body" type="text" maxlength="500" placeholder="Balas pesan sebagai Lingga..." autocomplete="off" required>
+          <button type="submit" class="btn-send">Kirim</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="/js/admin.js"></script>
+</body>
+</html>

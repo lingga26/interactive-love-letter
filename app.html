@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Untukmu ✨</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <audio id="bgm" loop preload="auto"></audio>
+
+  <!-- Floating Controls (muncul setelah kado dibuka) -->
+  <div class="floating-bar">
+    <button id="btn-track" class="pill-btn" hidden type="button">📦 Lacak Paket</button>
+    <div id="music-bar" class="music-pill" hidden>
+      <button id="btn-music" type="button" aria-label="Putar atau jeda musik">⏸️</button>
+      <div class="music-meta">
+        <span id="song-title">Lagu</span>
+        <small id="song-artist">Artis</small>
+      </div>
+    </div>
+  </div>
+
+  <main id="app-main">
+    <!-- Loading / Initial Gate -->
+    <section id="gate" hidden>
+      <div class="card center-card">
+        <span class="badge">Pesan Pribadi</span>
+        <h1>Hai, <span id="her-name">Kamu</span> ✨</h1>
+        <p class="subtitle">Ada sesuatu yang ingin aku sampaikan, plus satu paket kecil buat kamu. Ketuk kadonya untuk membuka ya.</p>
+
+        <div id="giftbox" class="gift-container" role="button" tabindex="0" aria-label="Buka Kado">
+          <div class="gift-box">
+            <div class="lid">
+              <div class="bow"></div>
+            </div>
+            <div class="box-body">
+              <div class="ribbon-v"></div>
+            </div>
+          </div>
+          <p class="tap-hint">👆 Ketuk kado untuk membuka</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- F2: Animasi Kado Terbuka -->
+    <section id="opening" hidden>
+      <div class="card center-card">
+        <div id="giftbox-anim" class="gift-container">
+          <div class="gift-box">
+            <div class="lid">
+              <div class="bow"></div>
+            </div>
+            <div class="box-body">
+              <div class="ribbon-v"></div>
+            </div>
+          </div>
+        </div>
+        <p class="subtitle">Membuka kado untukmu...</p>
+        <button id="opening-skip" class="btn-ghost" type="button">Lewati animasi →</button>
+      </div>
+    </section>
+
+    <!-- F3: Kartu Resi Pengiriman -->
+    <section id="resi" hidden>
+      <div class="card receipt-card">
+        <div class="receipt-header">
+          <div>
+            <span class="badge-courier">EXPRESS DELIVERY</span>
+            <h2>Kartu Resi Hadiah</h2>
+          </div>
+          <span class="status-pill">Paket sedang dikirim</span>
+        </div>
+
+        <div class="receipt-grid">
+          <div>
+            <small>Pengirim</small>
+            <strong id="from-name">Lingga</strong>
+          </div>
+          <div>
+            <small>Penerima</small>
+            <strong id="to-name">Kamu</strong>
+          </div>
+        </div>
+
+        <div class="receipt-code-box">
+          <small>Nomor Resi</small>
+          <div id="resi-label" class="resi-code">KADO-XXXX</div>
+        </div>
+
+        <div class="form-group">
+          <label for="resi-input">Lacak posisi paketmu sekarang:</label>
+          <input id="resi-input" type="text" placeholder="Ketik nomor resi..." autocomplete="off">
+          <p id="resi-error" class="error-text" role="alert"></p>
+        </div>
+
+        <div class="btn-stack">
+          <button id="resi-go" class="btn-primary" type="button">🔍 Lacak Paket</button>
+          <button id="resi-skip" class="btn-ghost" type="button">Baca suratku dulu →</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- F4: Lacak Paket (Timeline Petunjuk) -->
+    <section id="tracking" hidden>
+      <div class="card">
+        <div class="receipt-header">
+          <div>
+            <span class="badge-courier">STATUS PELACAKAN</span>
+            <h2 id="tracking-code-title">Lacak Paket</h2>
+          </div>
+        </div>
+
+        <ul id="timeline" class="timeline"></ul>
+
+        <div class="btn-stack">
+          <button id="track-next" class="btn-primary" hidden type="button">💌 Lanjut baca suratku</button>
+          <button id="track-back" class="btn-ghost" type="button">← Kembali ke Kartu Resi</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- F5: Surat Permintaan Maaf -->
+    <section id="letter" hidden>
+      <div class="card letter-card">
+        <span class="badge">Dari Hati</span>
+        <h2>Surat Untukmu</h2>
+        <div id="letter-body" class="letter-body"></div>
+
+        <div class="btn-stack">
+          <button id="letter-skip" class="btn-ghost" type="button">Tampilkan semua teks</button>
+          <button id="letter-next" class="btn-primary" hidden type="button">📸 Lihat Kenangan Kita →</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- F6: Galeri Foto Polaroid -->
+    <section id="gallery" hidden>
+      <div class="card">
+        <span class="badge">Momen Kita</span>
+        <h2>Galeri Kenangan</h2>
+        <p class="subtitle">Geser ke samping atau ketuk foto untuk memperbesar.</p>
+
+        <div id="gallery-track" class="polaroid-carousel"></div>
+
+        <div class="btn-stack">
+          <button id="gallery-next" class="btn-primary" type="button">💬 Pesan Penutup & Obrolan →</button>
+          <button id="gallery-back" class="btn-ghost" type="button">← Kembali ke Surat</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- F8: Pesan Penutup + Chat Sementara -->
+    <section id="closing" hidden>
+      <div class="card">
+        <span class="badge">Selamat Ulang Tahun 🎂</span>
+        <h2 id="closing-text" class="closing-quote">Selamat ulang tahun. Aku sayang kamu.</h2>
+        <p class="subtitle">Kamu bisa balas atau tulis apa pun di bawah ini. Pesan ini privat hanya antara kita berdua.</p>
+
+        <div class="chat-box">
+          <div id="chat-list" class="chat-list" aria-live="polite">
+            <p class="chat-empty">Belum ada pesan. Tulis sesuatu untuk memulai obrolan 💬</p>
+          </div>
+          <form id="chat-form" class="chat-form">
+            <input name="body" type="text" maxlength="500" placeholder="Tulis balasanmu di sini..." autocomplete="off" required>
+            <button type="submit" class="btn-send">Kirim</button>
+          </form>
+          <p id="chat-error" class="error-text"></p>
+        </div>
+
+        <div class="nav-links">
+          <button id="closing-to-letter" class="btn-ghost" type="button">📖 Baca Surat</button>
+          <button id="closing-to-gallery" class="btn-ghost" type="button">🖼️ Galeri Foto</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Lightbox Modal untuk perbesar foto -->
+  <div id="lightbox" class="lightbox" hidden>
+    <button id="lightbox-close" class="lightbox-close" type="button" aria-label="Tutup">✕</button>
+    <img id="lightbox-img" src="" alt="Foto kenangan">
+    <p id="lightbox-caption"></p>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+  <script type="module" src="/js/gift.js"></script>
+</body>
+</html>
